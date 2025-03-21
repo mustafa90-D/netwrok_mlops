@@ -8,6 +8,11 @@ load_dotenv()
 MONGO_DB_URL=os.getenv("MONGO_DB_URL")
 print(MONGO_DB_URL)
 
+
+# Ensure the URL is not empty
+if not MONGO_DB_URL:
+    raise ValueError("❌ ERROR: MongoDB URL is missing. Check your .env file!")
+
 import certifi
 ca=certifi.where()
 
@@ -50,13 +55,11 @@ class NetworkDataExtract():
         
 if __name__=='__main__':
     FILE_PATH="Network_Data\phisingData.csv"
-    DATABASE="KRISHAI"
-    Collection="NetworkData"
+    DATABASE="Networkscurity"
+    Collection="Security_data"
     networkobj=NetworkDataExtract()
     records=networkobj.csv_to_json_convertor(file_path=FILE_PATH)
     print(records)
     no_of_records=networkobj.insert_data_mongodb(records,DATABASE,Collection)
     print(no_of_records)
         
-
-
