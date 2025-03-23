@@ -1,7 +1,8 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from networksecurity.exception.exception import NetworkSecurityException
 from networksecurity.logging.logger import logging
-
-
 ## configuration of the Data Ingestion Config
 
 from networksecurity.entity.config_entity import DataIngestionConfig
@@ -33,17 +34,24 @@ class DataIngestion:
         try:
             database_name=self.data_ingestion_config.database_name
             collection_name=self.data_ingestion_config.collection_name
+            print(f"Connecting to DB: {database_name}, Collection: {collection_name}")
             self.mongo_client=pymongo.MongoClient(MONGO_DB_URL)
             collection=self.mongo_client[database_name][collection_name]
 
             df=pd.DataFrame(list(collection.find()))
+            if df.empty:
+                raise ValueError("❌ No data found in MongoDB collection. Cannot proceed with data ingestion.")
+
+
+            print(f"📌 Documents found: {len(df)}")
+            print(df.head())
             if "_id" in df.columns.to_list():
                 df=df.drop(columns=["_id"],axis=1)
             
             df.replace({"na":np.nan},inplace=True)
             return df
         except Exception as e:
-            raise NetworkSecurityException
+            raise NetworkSecurityException(str(e), sys)
         
     def export_data_into_feature_store(self,dataframe: pd.DataFrame):
         try:
@@ -90,12 +98,15 @@ class DataIngestion:
         
     def initiate_data_ingestion(self):
         try:
-            dataframe=self.export_collection_as_dataframe()
-            dataframe=self.export_data_into_feature_store(dataframe)
+            dataframe = self.export_collection_as_dataframe()
+            dataframe = self.export_data_into_feature_store(dataframe)
+            print("✅ Data ingestion completed.")
             self.split_data_as_train_test(dataframe)
-            dataingestionartifact=DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
-                                                        test_file_path=self.data_ingestion_config.testing_file_path)
+            dataingestionartifact = DataIngestionArtifact(
+                trained_file_path=self.data_ingestion_config.training_file_path,
+                test_file_path=self.data_ingestion_config.testing_file_path
+            )
             return dataingestionartifact
 
         except Exception as e:
-            raise NetworkSecurityException
+            raise NetworkSecurityException(str(e), sys) 
