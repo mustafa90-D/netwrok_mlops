@@ -1,0 +1,6 @@
+[ 2025-03-23 03:05:43,434 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[ 2025-03-23 03:05:43,439 ] 107 dagshub - INFO - Accessing as mustafa90-D
+[ 2025-03-23 03:05:43,715 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/repos/mustafa90-D/netwrok_mlops "HTTP/1.1 200 OK"
+[ 2025-03-23 03:05:43,879 ] 1025 httpx - INFO - HTTP Request: GET https://dagshub.com/api/v1/user "HTTP/1.1 200 OK"
+[ 2025-03-23 03:05:43,885 ] 107 dagshub - INFO - Initialized MLflow to track repo "mustafa90-D/netwrok_mlops"
+[ 2025-03-23 03:05:43,888 ] 107 dagshub - INFO - Repository mustafa90-D/netwrok_mlops initialized!
