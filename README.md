@@ -98,15 +98,17 @@ MLOPS/
 
 ## 🧪 Technologies Used
 
-- **Python**
-- **Scikit-learn / XGBoost / LightGBM**
-- **Pandas, NumPy**
-- **MongoDB** for result storage
-- **AWS S3** for model backup
-- **PyYAML** for config and schema
-- **FastAPI / Streamlit** for serving (planned or implemented)
-- **Docker** for containerization
-- **GitHub Actions** for CI/CD
+-📦 ML libraries (Scikit-learn, LightGBM, XGBoost)
+
+☁️ Cloud tools (AWS S3)
+
+🧠 Tracking (MLflow)
+
+🧱 Infrastructure (Docker, CI/CD, MongoDB)
+
+🖥️ Serving (Streamlit or FastAPI)
+
+⚙️ Utilities (PyYAML, logging, GitHub Actions)
 
 ---
 
